@@ -2,16 +2,9 @@ package task_02;
 
 import java.util.Random;
 
-public class FlyWithWIngs implements FlyBehavior{
+public class FlyWithWings implements FlyBehavior{
     int duckSpeed;
     private int flightLength;
-
-    public int getFlightLength(){
-        return flightLength;
-    }
-    public void setFlightLength(int flightLength){
-        this.flightLength=flightLength;
-    }
 
     @Override
     public int fly() {
