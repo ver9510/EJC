@@ -46,7 +46,7 @@ public class DuckRace {
                 }
                 System.out.println("Would you like to continue? y/n");
                 usersAnswerContinue = userInput.readLine();
-            } while (usersAnswerContinue != "n");
+            } while (!usersAnswerContinue.equals("n"));
         } catch (Exception e) {
             e.printStackTrace();
         }
