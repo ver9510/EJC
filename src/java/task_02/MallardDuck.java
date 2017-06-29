@@ -1,6 +1,9 @@
 package task_02;
 
+import java.util.Random;
+
 public class MallardDuck extends Duck {
+
     public MallardDuck(){
         quackBehavior=new Quack();
         flyBehavior=new FlyWithWIngs();
