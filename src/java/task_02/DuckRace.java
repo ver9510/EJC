@@ -5,9 +5,9 @@ import java.io.InputStreamReader;
 import java.util.Random;
 
 public class DuckRace {
-    int userMoney = 500;
+    private int userMoney = 500;
 
-    public static void main(String[] args) {
+    public static void play() {
         DuckRace simulator = new DuckRace();
         Duck[] arrayOfDucks = new Duck[5];
         int[] arrayOfDuckFlightLength = new int[5];
@@ -26,7 +26,7 @@ public class DuckRace {
 
                 int userDuckChoice = Integer.parseInt(userInput.readLine()) - 1;
                 if (arrayOfDuckFlightLength[userDuckChoice] == 0) {
-                    System.out.println("You lose!");
+                    System.out.println("You lose! This duck can't fly!");
                     simulator.userMoney = 0;
                 } else {
                     System.out.println("Starting race!");
