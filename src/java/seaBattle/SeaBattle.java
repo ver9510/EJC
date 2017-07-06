@@ -45,12 +45,11 @@ public class SeaBattle {
 
     private void setShip(int sizeOfShip) {
         boolean setShip = false;
-        //Random rnd = new Random();
+        Random rnd = new Random();
         do {
-            Random rnd = new Random();
             int startOf4DeckShipX = rnd.nextInt(10);
             int startOf4DeckShipY = rnd.nextInt(10);
-            if (startOf4DeckShipX + 4 <= 10 && startOf4DeckShipY + 4 <= 10) {
+            if (startOf4DeckShipX + sizeOfShip <= 10 && startOf4DeckShipY + sizeOfShip <= 10) {
                 if (rnd.nextBoolean() == true) {
                     if (checkFuturePlace(startOf4DeckShipX, startOf4DeckShipX + sizeOfShip, startOf4DeckShipY, 'l')) {
                         setShip = true;
@@ -85,7 +84,7 @@ public class SeaBattle {
     }
 
     private void setShipsOnField() {
-        byte sizeOfShip;
+        //byte sizeOfShip;
         setShip(4);
         setShip(3);
         setShip(3);
@@ -117,7 +116,6 @@ public class SeaBattle {
     }
 
     private void playGame(BufferedReader reader) throws IOException {
-        //System.out.println("Make your shot: type coordinates i and j like this: 2:3");
         int countPartsOfShips = 20;
         int countOfShots = 0;
         while (countPartsOfShips > 0 && countOfShots < 100) {
@@ -154,13 +152,12 @@ public class SeaBattle {
         if (countPartsOfShips == 0) System.out.println("You win!");
     }
 
-    public static void main(String[] args) {
+    public void start() {
         SeaBattle battle = new SeaBattle();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             do {
                 battle.fillFieldToShow();
                 battle.setShipsOnField();
-                //battle.printField(false);
                 System.out.println("There are field 10x10 with one four-deck ships, two three-deck ships, " +
                         "three two-deck and four one-deck ships. \nCoordinates is numerated from 0 to 9. " +
                         "By horizontal axe there are coordinates i, by vertical axe there are coordinates j." +
@@ -174,7 +171,5 @@ public class SeaBattle {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //battle.printField(true);
-
     }
 }
