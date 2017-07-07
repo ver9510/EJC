@@ -1,4 +1,4 @@
-package seaBattle;
+package task03;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,8 +6,8 @@ import java.io.InputStreamReader;
 import java.util.Random;
 
 public class SeaBattle {
-    char[][] fieldToShow = new char[10][10];
-    byte[][] fieldWithShips = new byte[10][10];
+    private char[][] fieldToShow = new char[10][10];
+    private byte[][] fieldWithShips = new byte[10][10];
 
     private void fillFieldToShow() {
         for (int i = 0; i < 10; i++) {
@@ -16,7 +16,14 @@ public class SeaBattle {
             }
         }
     }
-
+    /**
+     * Checks whether random chosen place of the ship is empty
+     * @param start - coordinate of beginning of the ship
+     * @param end - coordinate of end of the ship
+     * @param fixedPoint - coordinate of ship by another axe
+     * @param direction - can take two values - 'l' - the ship will be checked by horizontal,
+     *                  'd' - the place will be placed by vertical
+     * */
     private boolean checkFuturePlace(int start, int end, int fixedPoint, char direction) {
         boolean emptyCell = true;
         if (direction == 'l') {
@@ -42,47 +49,52 @@ public class SeaBattle {
         }
         return emptyCell;
     }
-
+    /**
+     * Places the ship with specified length on the field.
+     * @param - sizeOfShip - length of the ship, cunt of cells
+     * */
     private void setShip(int sizeOfShip) {
         boolean setShip = false;
         Random rnd = new Random();
         do {
-            int startOf4DeckShipX = rnd.nextInt(10);
-            int startOf4DeckShipY = rnd.nextInt(10);
-            if (startOf4DeckShipX + sizeOfShip <= 10 && startOf4DeckShipY + sizeOfShip <= 10) {
+            int startOfShipX = rnd.nextInt(10);
+            int startOfShipY = rnd.nextInt(10);
+            if (startOfShipX + sizeOfShip <= 10 && startOfShipY + sizeOfShip <= 10) {
                 if (rnd.nextBoolean() == true) {
-                    if (checkFuturePlace(startOf4DeckShipX, startOf4DeckShipX + sizeOfShip, startOf4DeckShipY, 'l')) {
+                    if (checkFuturePlace(startOfShipX, startOfShipX + sizeOfShip, startOfShipY, 'l')) {
                         setShip = true;
-                        for (int j = startOf4DeckShipX; j < startOf4DeckShipX + sizeOfShip; j++) {
-                            fieldWithShips[startOf4DeckShipY][j] = 1;
+                        for (int j = startOfShipX; j < startOfShipX + sizeOfShip; j++) {
+                            fieldWithShips[startOfShipY][j] = 1;
                         }
                     }
                 } else {
-                    if (checkFuturePlace(startOf4DeckShipY, startOf4DeckShipY + sizeOfShip, startOf4DeckShipX, 'd')) {
+                    if (checkFuturePlace(startOfShipY, startOfShipY + sizeOfShip, startOfShipX, 'd')) {
                         setShip = true;
-                        for (int i = startOf4DeckShipY; i < startOf4DeckShipY + sizeOfShip; i++) {
-                            fieldWithShips[i][startOf4DeckShipX] = 1;
+                        for (int i = startOfShipY; i < startOfShipY + sizeOfShip; i++) {
+                            fieldWithShips[i][startOfShipX] = 1;
                         }
                     }
                 }
-            } else if (startOf4DeckShipX + sizeOfShip <= 10 && startOf4DeckShipY + sizeOfShip > 10) {
-                if (checkFuturePlace(startOf4DeckShipX, startOf4DeckShipX + sizeOfShip, startOf4DeckShipY, 'l')) {
+            } else if (startOfShipX + sizeOfShip <= 10 && startOfShipY + sizeOfShip > 10) {
+                if (checkFuturePlace(startOfShipX, startOfShipX + sizeOfShip, startOfShipY, 'l')) {
                     setShip = true;
-                    for (int j = startOf4DeckShipX; j < startOf4DeckShipX + sizeOfShip; j++) {
-                        fieldWithShips[startOf4DeckShipY][j] = 1;
+                    for (int j = startOfShipX; j < startOfShipX + sizeOfShip; j++) {
+                        fieldWithShips[startOfShipY][j] = 1;
                     }
                 }
-            } else if (startOf4DeckShipX + sizeOfShip > 10 && startOf4DeckShipY + sizeOfShip <= 10) {
-                if (checkFuturePlace(startOf4DeckShipY, startOf4DeckShipY + sizeOfShip, startOf4DeckShipX, 'd')) {
+            } else if (startOfShipX + sizeOfShip > 10 && startOfShipY + sizeOfShip <= 10) {
+                if (checkFuturePlace(startOfShipY, startOfShipY + sizeOfShip, startOfShipX, 'd')) {
                     setShip = true;
-                    for (int i = startOf4DeckShipY; i < startOf4DeckShipY + sizeOfShip; i++) {
-                        fieldWithShips[i][startOf4DeckShipX] = 1;
+                    for (int i = startOfShipY; i < startOfShipY + sizeOfShip; i++) {
+                        fieldWithShips[i][startOfShipX] = 1;
                     }
                 }
             }
         } while (setShip != true);
     }
-
+    /**
+     * Places all ships on field
+     * */
     private void setShipsOnField() {
         //byte sizeOfShip;
         setShip(4);
@@ -97,6 +109,11 @@ public class SeaBattle {
         setShip(1);
     }
 
+    /**
+     * Prints game field.
+     * @param choiceOfField - if true - print fieldWithShips where are the moves of player.
+     *                      if false - print hidden field with all ships
+     * */
     private void printField(Boolean choiceOfField) {
         if (choiceOfField == true) {
             for (int i = 0; i < 10; i++) {
