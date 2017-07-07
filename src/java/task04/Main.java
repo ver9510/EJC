@@ -28,13 +28,13 @@ public class Main {
 
     private boolean doExercise9_116(BufferedReader reader) throws IOException {
         boolean res = false;
-        String s1 = reader.readLine();
-        s1 = s1.replace(" ", "");
-        StringBuilder builder = new StringBuilder();
-        for (int i = s1.length() - 1; i >= 0; i--) {
-            builder.append(s1.charAt(i));
+        String inputString = reader.readLine();
+        inputString = inputString.replace(" ", "");
+        StringBuilder reversedLine = new StringBuilder();
+        for (int i = inputString.length() - 1; i >= 0; i--) {
+            reversedLine.append(inputString.charAt(i));
         }
-        res = s1.contentEquals(builder);
+        res = inputString.contentEquals(reversedLine);
         return res;
     }
 }
