@@ -8,25 +8,27 @@ public class Main {
     public static void main(String[] args) {
         Main main = new Main();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            main.doExercise9_43(reader);
-            System.out.println(main.doExercise9_116(reader));
+            main.getOddChars(reader);
+            System.out.println(main.isPalindrome(reader));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void doExercise9_43(BufferedReader reader) throws IOException {
-        String s1 = reader.readLine();
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < s1.length(); i++) {
+    /*Exercise 9.43*/
+    private void getOddChars(BufferedReader reader) throws IOException {
+        String inputString = reader.readLine();
+        StringBuilder outputString = new StringBuilder();
+        for (int i = 0; i < inputString.length(); i++) {
             if (i % 2 != 0) {
-                builder.append(s1.charAt(i));
+                outputString.append(inputString.charAt(i));
             }
         }
-        System.out.println(builder.toString());
+        System.out.println(outputString.toString());
     }
 
-    private boolean doExercise9_116(BufferedReader reader) throws IOException {
+    /*Exercise 9.116*/
+    private boolean isPalindrome(BufferedReader reader) throws IOException {
         String inputString = reader.readLine();
         inputString = inputString.replace(" ", "");
         StringBuilder reversedLine = new StringBuilder();
