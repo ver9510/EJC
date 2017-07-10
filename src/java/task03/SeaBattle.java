@@ -132,6 +132,10 @@ public class SeaBattle {
         }
     }
 
+    /** Method with main logic of game. Operates with user's input, if user typed the coordinates of part of the ship -
+     * it writes to variable fieldToShow.
+     * @param reader - BufferedReader for user's input
+     */
     private void playGame(BufferedReader reader) throws IOException {
         int countPartsOfShips = 20;
         int countOfShots = 0;
@@ -169,6 +173,9 @@ public class SeaBattle {
         if (countPartsOfShips == 0) System.out.println("You win!");
     }
 
+    /**Starts the game - makes fieldToShow emplty(like "cells are closed"), sets the ships on the field,
+     * prints the field, opens BufferedReader and runs method playGame().
+     * */
     public void start() {
         SeaBattle battle = new SeaBattle();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
