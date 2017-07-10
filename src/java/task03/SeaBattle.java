@@ -3,11 +3,13 @@ package task03;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Random;
 
 public class SeaBattle {
     private char[][] fieldToShow = new char[10][10];
     private byte[][] fieldWithShips = new byte[10][10];
+    private static final char[] letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k'};
 
     private void fillFieldToShow() {
         for (int i = 0; i < 10; i++) {
@@ -16,14 +18,15 @@ public class SeaBattle {
             }
         }
     }
+
     /**
      * Checks whether random chosen place of the ship is empty
-     * @param start - coordinate of beginning of the ship
-     * @param end - coordinate of end of the ship
+     * @param start      - coordinate of beginning of the ship
+     * @param end        - coordinate of end of the ship
      * @param fixedPoint - coordinate of ship by another axe
-     * @param direction - can take two values - 'l' - the ship will be checked by horizontal,
-     *                  'd' - the place will be placed by vertical
-     * */
+     * @param direction  - can take two values - 'l' - the ship will be checked by horizontal,
+     *                   'd' - the place will be placed by vertical
+     */
     private boolean checkFuturePlace(int start, int end, int fixedPoint, char direction) {
         boolean emptyCell = true;
         if (direction == 'l') {
@@ -49,10 +52,11 @@ public class SeaBattle {
         }
         return emptyCell;
     }
+
     /**
      * Places the ship with specified length on the field.
      * @param sizeOfShip - length of the ship, cunt of cells
-     * */
+     */
     private void setShip(int sizeOfShip) {
         boolean setShip = false;
         Random rnd = new Random();
@@ -92,33 +96,52 @@ public class SeaBattle {
             }
         } while (setShip != true);
     }
+
+    /**Sets specified amount of ships with specified length.
+     * @param size - length of the ship
+     * @param count - count of the ships with this length.
+     * */
+    private void setNDeckShip(int size, int count){
+        for (int i = 0; i < count; i++) {
+            setShip(size);
+        }
+    }
+
     /**
      * Places all ships on field
-     * */
+     */
     private void setShipsOnField() {
         //byte sizeOfShip;
         setShip(4);
-        setShip(3);
-        setShip(3);
-        setShip(2);
-        setShip(2);
-        setShip(2);
-        setShip(1);
-        setShip(1);
-        setShip(1);
-        setShip(1);
+        setNDeckShip(3,2);
+        setNDeckShip(2,3);
+        setNDeckShip(1,4);
     }
 
     /**
      * Prints game field.
      * @param choiceOfField - if true - print fieldWithShips where are the moves of player.
      *                      if false - print hidden field with all ships
-     * */
+     */
     private void printField(Boolean choiceOfField) {
         if (choiceOfField == true) {
-            for (int i = 0; i < 10; i++) {
-                for (int j = 0; j < 10; j++) {
-                    System.out.print(fieldToShow[i][j]);
+            for (int i = -1; i < 10; i++) {
+                for (int j = -1; j < 10; j++) {
+                    if(i==-1 ){
+                        if(j==-1){
+                            System.out.print("  ");
+                        }
+                        else {
+                            System.out.print(j);
+                        }
+                    }else {
+                        if(j==-1){
+                            System.out.print(letters[i]+" ");
+                        }
+                        else {
+                            System.out.print(fieldToShow[i][j]);
+                        }
+                    }
                 }
                 System.out.println();
             }
@@ -132,7 +155,8 @@ public class SeaBattle {
         }
     }
 
-    /** Method with main logic of game. Operates with user's input, if user typed the coordinates of part of the ship -
+    /**
+     * Method with main logic of game. Operates with user's input, if user typed the coordinates of part of the ship -
      * it writes to variable fieldToShow.
      * @param reader - BufferedReader for user's input
      */
@@ -140,16 +164,15 @@ public class SeaBattle {
         int countPartsOfShips = 20;
         int countOfShots = 0;
         while (countPartsOfShips > 0 && countOfShots < 100) {
-            System.out.println("Make next shot: type coordinates i and j like this: 2:3");
+            System.out.println("Make next shot: type coordinates like this: a3");
             String response = reader.readLine();
             if (response.equals("exit")) {
                 break;
             } else {
-                String[] shotCoordinates = response.split(":");
-                try {
-                    int i = Integer.parseInt(shotCoordinates[0]);
-                    int j = Integer.parseInt(shotCoordinates[1]);
-                    if(i>=0 && i<10 && j>=0 && j<10) {
+                if (response.matches("[a-i,k]+[0-9]+")) {
+                    int i = Arrays.binarySearch(letters, response.charAt(0));
+                    int j = Integer.parseInt(response.substring(1));
+                    if (i >= 0 && i < 10 && j >= 0 && j < 10) {
                         if (fieldToShow[i][j] != '0') {
                             countOfShots++;
                             if (fieldWithShips[i][j] == 0) {
@@ -162,11 +185,13 @@ public class SeaBattle {
                             }
                         } else System.out.println("You have already shot here!");
                         printField(true);
+                    } else {
+                        System.out.println("You didn't hit the field! Type one letter between a and k(except j) " +
+                                "and one number between 0 and 9 like this d3");
                     }
-                    else{System.out.println("You didn't hit the field! Type numbers between 0 and 9 like this: 2:3");}
-                }
-                catch(NumberFormatException e){
-                    System.out.println("This is not a number! Type numbers between 0 and 9 like this 2:3");
+                } else {
+                    System.out.println("Wrong input! Type one letter between a and k(except j) " +
+                            "and one number between 0 and 9 like this d3");
                 }
             }
         }
@@ -174,9 +199,10 @@ public class SeaBattle {
         if (countPartsOfShips == 0) System.out.println("You win!");
     }
 
-    /**Starts the game - makes fieldToShow emplty(like "cells are closed"), sets the ships on the field,
+    /**
+     * Starts the game - makes fieldToShow emplty(like "cells are closed"), sets the ships on the field,
      * prints the field, opens BufferedReader and runs method playGame().
-     * */
+     */
     public void start() {
         SeaBattle battle = new SeaBattle();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
@@ -184,8 +210,8 @@ public class SeaBattle {
                 battle.fillFieldToShow();
                 battle.setShipsOnField();
                 System.out.println("There are field 10x10 with one four-deck ships, two three-deck ships, " +
-                        "three two-deck and four one-deck ships. \nCoordinates is numerated from 0 to 9. " +
-                        "By horizontal axe there are coordinates i, by vertical axe there are coordinates j." +
+                        "three two-deck and four one-deck ships. \nVertical coordinates is named by letters " +
+                        "from a to k, except j. Horizontal coordinates is numerated from 0 to 9." +
                         "\nx - closed cells, 0 - part of a ship, empty space - water. " +
                         "\nYou have 100 shots. If you don't find all ships - you'll lose." +
                         "\nIf you get bored - type \"exit\".");
