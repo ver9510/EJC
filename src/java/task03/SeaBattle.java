@@ -149,20 +149,21 @@ public class SeaBattle {
                 try {
                     int i = Integer.parseInt(shotCoordinates[0]);
                     int j = Integer.parseInt(shotCoordinates[1]);
-                    if (fieldToShow[i][j] != '0') {
-                        countOfShots++;
-                        if (fieldWithShips[i][j] == 0) {
-                            fieldToShow[i][j] = ' ';
-                            System.out.println("You missed");
-                        } else {
-                            fieldToShow[i][j] = '0';
-                            System.out.println("You shot the ship!");
-                            countPartsOfShips--;
-                        }
-                    } else System.out.println("You have already shot here!");
-                    printField(true);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("You didn't hit the field! Type numbers between 0 and 9 like this: 2:3");
+                    if(i>=0 && i<10 && j>=0 && j<10) {
+                        if (fieldToShow[i][j] != '0') {
+                            countOfShots++;
+                            if (fieldWithShips[i][j] == 0) {
+                                fieldToShow[i][j] = ' ';
+                                System.out.println("You missed");
+                            } else {
+                                fieldToShow[i][j] = '0';
+                                System.out.println("You shot the ship!");
+                                countPartsOfShips--;
+                            }
+                        } else System.out.println("You have already shot here!");
+                        printField(true);
+                    }
+                    else{System.out.println("You didn't hit the field! Type numbers between 0 and 9 like this: 2:3");}
                 }
                 catch(NumberFormatException e){
                     System.out.println("This is not a number! Type numbers between 0 and 9 like this 2:3");
