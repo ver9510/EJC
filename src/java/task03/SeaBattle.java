@@ -51,7 +51,7 @@ public class SeaBattle {
     }
     /**
      * Places the ship with specified length on the field.
-     * @param - sizeOfShip - length of the ship, cunt of cells
+     * @param sizeOfShip - length of the ship, cunt of cells
      * */
     private void setShip(int sizeOfShip) {
         boolean setShip = false;

@@ -27,14 +27,12 @@ public class Main {
     }
 
     private boolean doExercise9_116(BufferedReader reader) throws IOException {
-        boolean res = false;
         String inputString = reader.readLine();
         inputString = inputString.replace(" ", "");
         StringBuilder reversedLine = new StringBuilder();
         for (int i = inputString.length() - 1; i >= 0; i--) {
             reversedLine.append(inputString.charAt(i));
         }
-        res = inputString.contentEquals(reversedLine);
-        return res;
+        return inputString.contentEquals(reversedLine);
     }
 }
