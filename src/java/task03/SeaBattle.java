@@ -173,7 +173,6 @@ public class SeaBattle {
         }
     }
 
-
     /**
      * Method with main logic of game. Operates with user's input, if user typed the coordinates of part of the ship -
      * it writes to variable fieldToShow.
@@ -220,7 +219,7 @@ public class SeaBattle {
     }
 
     /**
-     * Starts the game - makes fieldToShow emplty(like "cells are closed"), sets the ships on the field,
+     * Starts the game - makes fieldToShow empty(like "cells are closed"), sets the ships on the field,
      * prints the field, opens BufferedReader and runs method playGame().
      */
     public void start() {
