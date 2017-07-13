@@ -12,12 +12,13 @@ public class SeaBattle {
     private byte[][] fieldWithShips = new byte[10][10];
 
     /**
-     * Markes all cells of fieldToShow closed - fills it with 'x'
+     * Markes all cells of fieldToShow closed - fills it with 'x' and makes fieldWithShips empty -fills with 0.
      */
     private void fillFieldToShow() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 fieldToShow[i][j] = 'x';
+                fieldWithShips[i][j]=0;
             }
         }
     }
@@ -173,7 +174,6 @@ public class SeaBattle {
         }
     }
 
-
     /**
      * Method with main logic of game. Operates with user's input, if user typed the coordinates of part of the ship -
      * it writes to variable fieldToShow.
@@ -220,11 +220,12 @@ public class SeaBattle {
     }
 
     /**
-     * Starts the game - makes fieldToShow emplty(like "cells are closed"), sets the ships on the field,
+     * Starts the game - makes fieldToShow empty(like "cells are closed"), sets the ships on the field,
      * prints the field, opens BufferedReader and runs method playGame().
      */
     public void start() {
         SeaBattle battle = new SeaBattle();
+        String answer;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             do {
                 battle.fillFieldToShow();
@@ -240,7 +241,8 @@ public class SeaBattle {
                 System.out.println("Ships were there:");
                 battle.printField(false);
                 System.out.println("Would you like to play again?");
-            } while (!reader.readLine().equals("n"));
+                answer=reader.readLine();
+            } while (!answer.equals("n"));
         } catch (IOException e) {
             e.printStackTrace();
         }
