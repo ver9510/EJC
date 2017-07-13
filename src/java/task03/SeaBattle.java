@@ -31,7 +31,7 @@ public class SeaBattle {
      * @param fixedPoint - coordinate of ship by another axe
      * @param direction  - can take two values - 'l' - the ship will be checked by horizontal,
      *                   'd' - the place will be placed by vertical
-     * @return emptyCell
+     * @return true, if cell, that we are checking, is empty, and false otherwise.
      */
     private boolean isFuturePlaceEmpty(int start, int end, int fixedPoint, char direction) {
         boolean emptyCell = true;
