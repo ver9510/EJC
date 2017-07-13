@@ -11,6 +11,9 @@ public class SeaBattle {
     private byte[][] fieldWithShips = new byte[10][10];
     private static final char[] letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k'};
 
+    /**
+     * Markes all cells of fieldToShow closed - fills it with 'x'
+     */
     private void fillFieldToShow() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -57,7 +60,7 @@ public class SeaBattle {
     /**
      * Places the ship with specified length on the field.
      *
-     * @param sizeOfShip - length of the ship, cunt of cells
+     * @param sizeOfShip - length of the ship, count of cells
      */
     private void setShip(int sizeOfShip) {
         boolean setShip = false;
