@@ -7,9 +7,9 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class SeaBattle {
+    private static final char[] LETTERS = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k'};
     private char[][] fieldToShow = new char[10][10];
     private byte[][] fieldWithShips = new byte[10][10];
-    private static final char[] letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k'};
 
     /**
      * Markes all cells of fieldToShow closed - fills it with 'x'
@@ -127,27 +127,52 @@ public class SeaBattle {
 
     /**
      * Prints game field.
+     *
+     * @param choiceOfField - if true - print fieldWithShips where are the moves of player.
+     *                      if false - print hidden field with all ships
      */
-    private void printField() {
-        for (int i = -1; i < 10; i++) {
-            for (int j = -1; j < 10; j++) {
-                if (i == -1) {
-                    if (j == -1) {
-                        System.out.print("  ");
+    private void printField(Boolean choiceOfField) {
+        if (choiceOfField == true) {
+            for (int i = -1; i < 10; i++) {
+                for (int j = -1; j < 10; j++) {
+                    if (i == -1) {
+                        if (j == -1) {
+                            System.out.print("  ");
+                        } else {
+                            System.out.print(j);
+                        }
                     } else {
-                        System.out.print(j);
-                    }
-                } else {
-                    if (j == -1) {
-                        System.out.print(letters[i] + " ");
-                    } else {
-                        System.out.print(fieldToShow[i][j]);
+                        if (j == -1) {
+                            System.out.print(LETTERS[i] + " ");
+                        } else {
+                            System.out.print(fieldToShow[i][j]);
+                        }
                     }
                 }
+                System.out.println();
             }
-            System.out.println();
+        } else {
+            for (int i = -1; i < 10; i++) {
+                for (int j = -1; j < 10; j++) {
+                    if (i == -1) {
+                        if (j == -1) {
+                            System.out.print("  ");
+                        } else {
+                            System.out.print(j);
+                        }
+                    } else {
+                        if (j == -1) {
+                            System.out.print(LETTERS[i] + " ");
+                        } else {
+                            System.out.print(fieldWithShips[i][j]);
+                        }
+                    }
+                }
+                System.out.println();
+            }
         }
     }
+
 
     /**
      * Method with main logic of game. Operates with user's input, if user typed the coordinates of part of the ship -
@@ -165,7 +190,7 @@ public class SeaBattle {
                 break;
             } else {
                 if (response.matches("[a-i,k]+[0-9]+")) {
-                    int i = Arrays.binarySearch(letters, response.charAt(0));
+                    int i = Arrays.binarySearch(LETTERS, response.charAt(0));
                     int j = Integer.parseInt(response.substring(1));
                     if (i >= 0 && i < 10 && j >= 0 && j < 10) {
                         if (fieldToShow[i][j] != '0') {
@@ -179,7 +204,7 @@ public class SeaBattle {
                                 countPartsOfShips--;
                             }
                         } else System.out.println("You have already shot here!");
-                        printField();
+                        printField(true);
                     } else {
                         System.out.println("You didn't hit the field! Type one letter between a and k(except j) " +
                                 "and one number between 0 and 9 like this d3");
@@ -205,13 +230,15 @@ public class SeaBattle {
                 battle.fillFieldToShow();
                 battle.setShipsOnField();
                 System.out.println("There are field 10x10 with one four-deck ships, two three-deck ships, " +
-                        "three two-deck and four one-deck ships. \nVertical coordinates is named by letters " +
+                        "three two-deck and four one-deck ships. \nVertical coordinates is named by LETTERS " +
                         "from a to k, except j. Horizontal coordinates is numerated from 0 to 9." +
                         "\nx - closed cells, 0 - part of a ship, empty space - water. " +
                         "\nYou have 100 shots. If you don't find all ships - you'll lose." +
                         "\nIf you get bored - type \"exit\".");
-                battle.printField();
+                battle.printField(true);
                 battle.playGame(reader);
+                System.out.println("Ships were there:");
+                battle.printField(false);
                 System.out.println("Would you like to play again?");
             } while (!reader.readLine().equals("n"));
         } catch (IOException e) {
