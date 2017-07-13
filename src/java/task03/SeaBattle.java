@@ -193,7 +193,7 @@ public class SeaBattle {
                     int i = Arrays.binarySearch(LETTERS, response.charAt(0));
                     int j = Integer.parseInt(response.substring(1));
                     if (i >= 0 && i < 10 && j >= 0 && j < 10) {
-                        if (fieldToShow[i][j] != '0') {
+                        if (fieldToShow[i][j]=='x') {
                             countOfShots++;
                             if (fieldWithShips[i][j] == 0) {
                                 fieldToShow[i][j] = ' ';
