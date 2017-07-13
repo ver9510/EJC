@@ -18,7 +18,7 @@ public class SeaBattle {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 fieldToShow[i][j] = 'x';
-                fieldWithShips[i][j]=0;
+                fieldWithShips[i][j] = 0;
             }
         }
     }
@@ -31,8 +31,9 @@ public class SeaBattle {
      * @param fixedPoint - coordinate of ship by another axe
      * @param direction  - can take two values - 'l' - the ship will be checked by horizontal,
      *                   'd' - the place will be placed by vertical
+     * @return emptyCell
      */
-    private boolean checkFuturePlace(int start, int end, int fixedPoint, char direction) {
+    private boolean isFuturePlaceEmpty(int start, int end, int fixedPoint, char direction) {
         boolean emptyCell = true;
         if (direction == 'l') {
             for (int j = (start > 0 ? start - 1 : start); j < (end < 9 ? end + 1 : end); j++) {
@@ -71,14 +72,14 @@ public class SeaBattle {
             int startOfShipY = rnd.nextInt(10);
             if (startOfShipX + sizeOfShip <= 10 && startOfShipY + sizeOfShip <= 10) {
                 if (rnd.nextBoolean() == true) {
-                    if (checkFuturePlace(startOfShipX, startOfShipX + sizeOfShip, startOfShipY, 'l')) {
+                    if (isFuturePlaceEmpty(startOfShipX, startOfShipX + sizeOfShip, startOfShipY, 'l')) {
                         setShip = true;
                         for (int j = startOfShipX; j < startOfShipX + sizeOfShip; j++) {
                             fieldWithShips[startOfShipY][j] = 1;
                         }
                     }
                 } else {
-                    if (checkFuturePlace(startOfShipY, startOfShipY + sizeOfShip, startOfShipX, 'd')) {
+                    if (isFuturePlaceEmpty(startOfShipY, startOfShipY + sizeOfShip, startOfShipX, 'd')) {
                         setShip = true;
                         for (int i = startOfShipY; i < startOfShipY + sizeOfShip; i++) {
                             fieldWithShips[i][startOfShipX] = 1;
@@ -86,14 +87,14 @@ public class SeaBattle {
                     }
                 }
             } else if (startOfShipX + sizeOfShip <= 10 && startOfShipY + sizeOfShip > 10) {
-                if (checkFuturePlace(startOfShipX, startOfShipX + sizeOfShip, startOfShipY, 'l')) {
+                if (isFuturePlaceEmpty(startOfShipX, startOfShipX + sizeOfShip, startOfShipY, 'l')) {
                     setShip = true;
                     for (int j = startOfShipX; j < startOfShipX + sizeOfShip; j++) {
                         fieldWithShips[startOfShipY][j] = 1;
                     }
                 }
             } else if (startOfShipX + sizeOfShip > 10 && startOfShipY + sizeOfShip <= 10) {
-                if (checkFuturePlace(startOfShipY, startOfShipY + sizeOfShip, startOfShipX, 'd')) {
+                if (isFuturePlaceEmpty(startOfShipY, startOfShipY + sizeOfShip, startOfShipX, 'd')) {
                     setShip = true;
                     for (int i = startOfShipY; i < startOfShipY + sizeOfShip; i++) {
                         fieldWithShips[i][startOfShipX] = 1;
@@ -119,7 +120,6 @@ public class SeaBattle {
      * Places all ships on field
      */
     private void setShipsOnField() {
-        //byte sizeOfShip;
         setShip(4);
         setNDeckShip(3, 2);
         setNDeckShip(2, 3);
@@ -127,50 +127,50 @@ public class SeaBattle {
     }
 
     /**
-     * Prints game field.
-     *
-     * @param choiceOfField - if true - print fieldWithShips where are the moves of player.
-     *                      if false - print hidden field with all ships
+     * Prints game field with moves of user
      */
-    private void printField(Boolean choiceOfField) {
-        if (choiceOfField == true) {
-            for (int i = -1; i < 10; i++) {
-                for (int j = -1; j < 10; j++) {
-                    if (i == -1) {
-                        if (j == -1) {
-                            System.out.print("  ");
-                        } else {
-                            System.out.print(j);
-                        }
+    private void printFieldToShow() {
+        for (int i = -1; i < 10; i++) {
+            for (int j = -1; j < 10; j++) {
+                if (i == -1) {
+                    if (j == -1) {
+                        System.out.print("  ");
                     } else {
-                        if (j == -1) {
-                            System.out.print(LETTERS[i] + " ");
-                        } else {
-                            System.out.print(fieldToShow[i][j]);
-                        }
+                        System.out.print(j);
+                    }
+                } else {
+                    if (j == -1) {
+                        System.out.print(LETTERS[i] + " ");
+                    } else {
+                        System.out.print(fieldToShow[i][j]);
                     }
                 }
-                System.out.println();
             }
-        } else {
-            for (int i = -1; i < 10; i++) {
-                for (int j = -1; j < 10; j++) {
-                    if (i == -1) {
-                        if (j == -1) {
-                            System.out.print("  ");
-                        } else {
-                            System.out.print(j);
-                        }
+            System.out.println();
+        }
+    }
+
+    /**
+     * Prints field with setted ships
+     */
+    private void printFieldWithShips() {
+        for (int i = -1; i < 10; i++) {
+            for (int j = -1; j < 10; j++) {
+                if (i == -1) {
+                    if (j == -1) {
+                        System.out.print("  ");
                     } else {
-                        if (j == -1) {
-                            System.out.print(LETTERS[i] + " ");
-                        } else {
-                            System.out.print(fieldWithShips[i][j]);
-                        }
+                        System.out.print(j);
+                    }
+                } else {
+                    if (j == -1) {
+                        System.out.print(LETTERS[i] + " ");
+                    } else {
+                        System.out.print(fieldWithShips[i][j]);
                     }
                 }
-                System.out.println();
             }
+            System.out.println();
         }
     }
 
@@ -204,7 +204,7 @@ public class SeaBattle {
                                 countPartsOfShips--;
                             }
                         } else System.out.println("You have already shot here!");
-                        printField(true);
+                        printFieldToShow();
                     } else {
                         System.out.println("You didn't hit the field! Type one letter between a and k(except j) " +
                                 "and one number between 0 and 9 like this d3");
@@ -236,12 +236,12 @@ public class SeaBattle {
                         "\nx - closed cells, 0 - part of a ship, empty space - water. " +
                         "\nYou have 100 shots. If you don't find all ships - you'll lose." +
                         "\nIf you get bored - type \"exit\".");
-                battle.printField(true);
+                battle.printFieldToShow();
                 battle.playGame(reader);
                 System.out.println("Ships were there:");
-                battle.printField(false);
+                battle.printFieldWithShips();
                 System.out.println("Would you like to play again?");
-                answer=reader.readLine();
+                answer = reader.readLine();
             } while (!answer.equals("n"));
         } catch (IOException e) {
             e.printStackTrace();
