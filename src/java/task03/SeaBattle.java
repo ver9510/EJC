@@ -42,7 +42,7 @@ public class SeaBattle {
     private boolean isFuturePlaceEmpty(int start, int end, int fixedPoint, char direction) {
         boolean emptyCell = true;
         if (direction == 'l') {
-            for (int j = (start > 0 ? start - 1 : start); j < (end < FIELD_SIZE-1 ? end + 1 : end); j++) {
+            for (int j = (start > 0 ? start - 1 : start); j < (end < FIELD_SIZE ? end + 1 : end); j++) {
                 if (fixedPoint > 0) {
                     if (fieldWithShips[fixedPoint - 1][j] == 1) emptyCell = false;
                 }
@@ -50,10 +50,9 @@ public class SeaBattle {
                 if (fixedPoint + 1 < FIELD_SIZE) {
                     if (fieldWithShips[fixedPoint + 1][j] == 1) emptyCell = false;
                 }
-
             }
         } else {
-            for (int i = (start > 0 ? start - 1 : start); i < (end < FIELD_SIZE-1 ? end + 1 : end); i++) {
+            for (int i = (start > 0 ? start - 1 : start); i < (end < FIELD_SIZE ? end + 1 : end); i++) {
                 if (fixedPoint > 0) {
                     if (fieldWithShips[i][fixedPoint - 1] == 1) emptyCell = false;
                 }
@@ -140,10 +139,10 @@ public class SeaBattle {
     /**
      * Prints game field.
      *
-     * @param choiceOfField - if true - print fieldWithShips where are the moves of player.
-     *                      if false - print hidden field with all ships
+     * @param choiceOfField - if this parameter equals value FIELD_TO_SHOW of enum GameFields  - print array fieldWithShips
+     *                      which contains the moves of player, if value FIELD_WITH_SHIPS - print hidden field with all ships
      */
-    private void printField(boolean choiceOfField) {
+    private void printField(Enum choiceOfField) {
         for (int i = -1; i < FIELD_SIZE; i++) {
             for (int j = -1; j < FIELD_SIZE; j++) {
                 if (i == -1) {
@@ -156,7 +155,7 @@ public class SeaBattle {
                     if (j == -1) {
                         System.out.print(LETTERS[i] + " ");
                     } else {
-                        if (choiceOfField) {
+                        if (choiceOfField==GameFields.FIELD_TO_SHOW) {
                             System.out.print(fieldToShow[i][j]);
                         } else {
                             System.out.print(fieldWithShips[i][j]);
@@ -198,7 +197,7 @@ public class SeaBattle {
                                 countPartsOfShips--;
                             }
                         } else System.out.println("You have already shot here!");
-                        printField(true);
+                        printField(GameFields.FIELD_TO_SHOW);
                     } else {
                         System.out.println("You didn't hit the field! Type one letter between a and k(except j) " +
                                 "and one number between 0 and 9 like this d3");
@@ -230,10 +229,10 @@ public class SeaBattle {
                         "\nx - closed cells, 0 - part of a ship, empty space - water. " +
                         "\nYou have 100 shots. If you don't find all ships - you'll lose." +
                         "\nIf you get bored - type \"exit\".");
-                battle.printField(true);
+                battle.printField(GameFields.FIELD_TO_SHOW);
                 battle.playGame(reader);
                 System.out.println("Ships were there:");
-                battle.printField(false);
+                battle.printField(GameFields.FIELD_WITH_SHIPS);
                 System.out.println("Would you like to play again?");
                 answer = reader.readLine();
             } while (!answer.equals("n"));
