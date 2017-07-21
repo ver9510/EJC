@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Sort {
-
     /**
      * Main method - calls methods sortNumbersFromKeyboardWithQuickSort and sortRandomNumbersWithInsertionsSort
      */
