@@ -19,10 +19,12 @@ public class Main {
 
     //Exercise 9.154
     private int countOfDifferentLetters(BufferedReader reader) throws IOException {
-        Set charSet = new HashSet();
+        Set<Character> charSet = new HashSet<>();
         String inputWord = reader.readLine();
         for (char letter : inputWord.toCharArray()) {
-            charSet.add(letter);
+            if (Character.isAlphabetic(letter)) {
+                charSet.add(letter);
+            }
         }
         return charSet.size();
     }
@@ -30,15 +32,15 @@ public class Main {
     //Exercise 9.153
     private int getMaxSequenceOfLetters(BufferedReader reader) throws IOException {
         String inputText = reader.readLine();
-        int maxSequenceCount=0;
-        char[] charArray=inputText.toCharArray();
-        int currentSequenceCount=1;
-        for (int i = 0; i < inputText.length()-1; i++) {
-            if(charArray[i]==charArray[i+1])
+        int maxSequenceCount = 0;
+        char[] charArray = inputText.toCharArray();
+        int currentSequenceCount = 1;
+        for (int i = 0; i < inputText.length() - 1; i++) {
+            if (charArray[i] == charArray[i + 1])
                 currentSequenceCount++;
             else {
-                maxSequenceCount=(maxSequenceCount<currentSequenceCount)?currentSequenceCount:maxSequenceCount;
-                currentSequenceCount=0;
+                maxSequenceCount = (maxSequenceCount < currentSequenceCount) ? currentSequenceCount : maxSequenceCount;
+                currentSequenceCount = 0;
             }
         }
         return maxSequenceCount;
