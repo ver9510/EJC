@@ -1,7 +1,7 @@
 package task07;
 
 import org.junit.Test;
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +25,6 @@ public class SortTest {
     public void testDoInsertionSort() {
         Sort sort = new Sort();
         sort.doInsertionSort(array);
-        Assert.assertEquals(Arrays.asList(sortedArray), Arrays.asList(array));
+        Assert.assertArrayEquals(sortedArray, array);
     }
 }
