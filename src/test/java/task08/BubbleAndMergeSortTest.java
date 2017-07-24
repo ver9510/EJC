@@ -1,7 +1,8 @@
 package task08;
 
 import org.junit.Test;
-import org.junit.Assert;
+
+import static org.junit.Assert.*;
 
 public class BubbleAndMergeSortTest {
     private int[] array = {43, 65, 76, 12, 34, 54, 32, 765, 987, 87};
@@ -11,13 +12,21 @@ public class BubbleAndMergeSortTest {
     public void testDoBubbleSort() {
         BubbleAndMergeSort sort = new BubbleAndMergeSort();
         int[] arraySortedWithBubbleSort = sort.doMergeSort(array);
-        Assert.assertArrayEquals(sortedArray, arraySortedWithBubbleSort);
+        assertArrayEquals(sortedArray, arraySortedWithBubbleSort);
     }
 
     @Test
     public void testDoMergeSort() {
         BubbleAndMergeSort sort = new BubbleAndMergeSort();
         int[] arraySortedWithMergeSort = sort.doMergeSort(array);
-        Assert.assertArrayEquals(sortedArray, arraySortedWithMergeSort);
+        assertArrayEquals(sortedArray, arraySortedWithMergeSort);
+    }
+
+    @Test
+    public void testBinarySearch() {
+        BubbleAndMergeSort sort = new BubbleAndMergeSort();
+        assertEquals(5, sort.binarySearch(65, 0, sortedArray.length - 1, sortedArray));
+        assertEquals(2, sort.binarySearch(34, 0, sortedArray.length - 1, sortedArray));
+        assertEquals(8, sort.binarySearch(765, 0, sortedArray.length - 1, sortedArray));
     }
 }

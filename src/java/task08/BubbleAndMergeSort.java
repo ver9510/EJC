@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class BubbleAndMergeSort {
-    private static int COUNT_OF_ELEMENTS = 10;
+    private static int COUNT_OF_ELEMENTS = 20;
 
     /**
      * Main method. Firstly, array is filled with random numbers, then it sorts with bubble sort
@@ -14,8 +14,13 @@ public class BubbleAndMergeSort {
         BubbleAndMergeSort main = new BubbleAndMergeSort();
         int[] arrayForSort = new int[COUNT_OF_ELEMENTS];
         Random rnd = new Random();
+        int keyElement = rnd.nextInt(1000);
         for (int i = 0; i < COUNT_OF_ELEMENTS; i++) {
-            arrayForSort[i] = rnd.nextInt(1000);
+            if (i == rnd.nextInt(COUNT_OF_ELEMENTS)) {
+                arrayForSort[i] = keyElement;
+            } else {
+                arrayForSort[i] = rnd.nextInt(1000);
+            }
         }
         System.out.println("Before sort");
         main.printArray(arrayForSort);
@@ -25,6 +30,8 @@ public class BubbleAndMergeSort {
         main.printArray(arraySortedWithBubbleSort);
         System.out.println("After Merge sort");
         main.printArray(arraySortedWithMergeSort);
+        int foundElementIndex = main.binarySearch(keyElement, 0, arraySortedWithBubbleSort.length - 1, arraySortedWithBubbleSort);
+        System.out.println(keyElement + " " + foundElementIndex);
     }
 
     /**
@@ -99,13 +106,18 @@ public class BubbleAndMergeSort {
     public int[] doBubbleSort(int[] arrayToSort) {
         int[] sortedArray = Arrays.copyOf(arrayToSort, arrayToSort.length);
         int lastIndex = sortedArray.length - 1;
+        boolean exitFlag = false;
         for (int i = 0; i < lastIndex - 1; i++) {
             for (int j = 0; j < lastIndex - i; j++) {
                 if (sortedArray[j] > sortedArray[j + 1]) {
                     int temp = sortedArray[j];
                     sortedArray[j] = sortedArray[j + 1];
                     sortedArray[j + 1] = temp;
+                    exitFlag = true;
                 }
+            }
+            if (!exitFlag) {
+                break;
             }
         }
         return sortedArray;
@@ -120,5 +132,29 @@ public class BubbleAndMergeSort {
         for (int element : arrayToPrint) {
             System.out.println(element);
         }
+    }
+
+    /**
+     * Search element in sorted array
+     *
+     * @param keyElement        - required number
+     * @param startIndex        - index of the start of the array
+     * @param endIndex          - index of the end of the array
+     * @param arrayForSearching - array in which we search element
+     * @return index of required element
+     */
+    public int binarySearch(int keyElement, int startIndex, int endIndex, int[] arrayForSearching) {
+        int resultElementIndex = 0;
+        int middleElementIndex = startIndex + (endIndex - startIndex) / 2 + 1;
+        if (keyElement == arrayForSearching[middleElementIndex]) {
+            resultElementIndex = middleElementIndex;
+        } else {
+            if (keyElement < arrayForSearching[middleElementIndex]) {
+                resultElementIndex = binarySearch(keyElement, startIndex, middleElementIndex - 1, arrayForSearching);
+            } else {
+                resultElementIndex = binarySearch(keyElement, middleElementIndex + 1, endIndex, arrayForSearching);
+            }
+        }
+        return resultElementIndex;
     }
 }
