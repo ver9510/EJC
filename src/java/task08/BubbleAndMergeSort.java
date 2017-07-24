@@ -7,7 +7,7 @@ public class BubbleAndMergeSort {
     private static int COUNT_OF_ELEMENTS = 10;
 
     /**
-     * Main method. FIrstly, array is filled by random numbers, then it sorts with bubble sort
+     * Main method. Firstly, array is filled with random numbers, then it sorts with bubble sort
      * and after the original array is sorted with merge sort. In the ned, results of sortings is printed.
      */
     public static void main(String[] args) {
@@ -28,7 +28,7 @@ public class BubbleAndMergeSort {
     }
 
     /**
-     * Sorts array with erge sort. Divides array in two until legth of array will be 1, and merges it in the right order.
+     * Sorts array with merge sort. Divides array in two until length of array will be 1, and merges it in the right order.
      *
      * @param arrayForSort - array, that we need to sort
      * @return sorted array
