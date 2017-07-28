@@ -12,11 +12,7 @@ public class BubbleAndMergeSort {
      */
     public static void main(String[] args) {
         BubbleAndMergeSort main = new BubbleAndMergeSort();
-        int[] arrayForSort = new int[COUNT_OF_ELEMENTS];
-        Random rnd = new Random();
-        for (int i = 0; i < COUNT_OF_ELEMENTS; i++) {
-            arrayForSort[i] = rnd.nextInt(1000);
-        }
+        int[] arrayForSort = main.fillArrayWithRandomNumbers();
         System.out.println("Before sort");
         main.printArray(arrayForSort);
         int[] arraySortedWithBubbleSort = main.doBubbleSort(arrayForSort);
@@ -25,10 +21,20 @@ public class BubbleAndMergeSort {
         main.printArray(arraySortedWithBubbleSort);
         System.out.println("After Merge sort");
         main.printArray(arraySortedWithMergeSort);
+        Random rnd=new Random();
         int keyElement = arrayForSort[rnd.nextInt(arrayForSort.length)];
         System.out.println("Search for " + keyElement);
         int foundElementIndex = main.binarySearch(keyElement, 0, arraySortedWithBubbleSort.length - 1, arraySortedWithBubbleSort);
         System.out.println("Index of " + keyElement + " is " + foundElementIndex);
+    }
+
+    private int[] fillArrayWithRandomNumbers() {
+        int[] arrayForSort = new int[COUNT_OF_ELEMENTS];
+        Random rnd = new Random();
+        for (int i = 0; i < COUNT_OF_ELEMENTS; i++) {
+            arrayForSort[i] = rnd.nextInt(1000);
+        }
+        return arrayForSort;
     }
 
     /**
@@ -142,12 +148,12 @@ public class BubbleAndMergeSort {
      */
     public int binarySearch(int keyElement, int startIndex, int endIndex, int[] arrayForSearching) {
         int resultElementIndex = 0;
-        int middleElementIndex = startIndex + (endIndex - startIndex) / 2 + 1;
+        int middleElementIndex = startIndex + (endIndex - startIndex) / 2;
         if (keyElement == arrayForSearching[middleElementIndex]) {
             resultElementIndex = middleElementIndex;
         } else {
             if (keyElement < arrayForSearching[middleElementIndex]) {
-                resultElementIndex = binarySearch(keyElement, startIndex, middleElementIndex - 1, arrayForSearching);
+                resultElementIndex = binarySearch(keyElement, startIndex, middleElementIndex, arrayForSearching);
             } else {
                 resultElementIndex = binarySearch(keyElement, middleElementIndex + 1, endIndex, arrayForSearching);
             }
