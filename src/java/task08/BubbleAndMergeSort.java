@@ -1,5 +1,7 @@
 package task08;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -14,13 +16,8 @@ public class BubbleAndMergeSort {
         BubbleAndMergeSort main = new BubbleAndMergeSort();
         int[] arrayForSort = new int[COUNT_OF_ELEMENTS];
         Random rnd = new Random();
-        int keyElement = rnd.nextInt(1000);
         for (int i = 0; i < COUNT_OF_ELEMENTS; i++) {
-            if (i == rnd.nextInt(COUNT_OF_ELEMENTS)) {
-                arrayForSort[i] = keyElement;
-            } else {
-                arrayForSort[i] = rnd.nextInt(1000);
-            }
+            arrayForSort[i] = rnd.nextInt(1000);
         }
         System.out.println("Before sort");
         main.printArray(arrayForSort);
@@ -30,8 +27,10 @@ public class BubbleAndMergeSort {
         main.printArray(arraySortedWithBubbleSort);
         System.out.println("After Merge sort");
         main.printArray(arraySortedWithMergeSort);
+        int keyElement = arrayForSort[rnd.nextInt(arrayForSort.length)];
+        System.out.println("Search for " + keyElement);
         int foundElementIndex = main.binarySearch(keyElement, 0, arraySortedWithBubbleSort.length - 1, arraySortedWithBubbleSort);
-        System.out.println(keyElement + " " + foundElementIndex);
+        System.out.println("Index of " + keyElement + " is " + foundElementIndex);
     }
 
     /**
