@@ -1,7 +1,5 @@
 package task08;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-
 import java.util.Arrays;
 import java.util.Random;
 
