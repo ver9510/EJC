@@ -16,7 +16,7 @@ public class ParseCSV {
     private static final int MAX_COUNT_OF_THREADS = 5;
 
     /**
-     * Map, contains pair of String and another Map. Key - user, Value - map, which contaons pairs of url and time
+     * Map, contains pair of String and another Map. Key - user, Value - map, which contains pairs of url and time
      */
     private volatile static Map<String, Map> userUsageOfUrl = new HashMap<>();
 
@@ -58,7 +58,7 @@ public class ParseCSV {
             while (reader.ready()) {
                 String inputStringFromFile = reader.readLine();
                 if (!inputStringFromFile.startsWith("id")) {
-                    putTimeUrlAndUser(inputStringFromFile.split(":"));
+                    putTimeUrlAndUser(inputStringFromFile.split(";"));
                 }
             }
         } catch (IOException e) {
@@ -114,7 +114,7 @@ public class ParseCSV {
             for (String user : userUsageOfUrl.keySet()) {
                 Map<String, Long> spentTimeAtUrl = userUsageOfUrl.get(user);
                 for (String url : spentTimeAtUrl.keySet()) {
-                    writer.append(user + ":" + url + ":" + spentTimeAtUrl.get(url) + "\n");
+                    writer.append(user + ";" + url + ";" + spentTimeAtUrl.get(url) + "\n");
                 }
             }
         } catch (IOException e) {
