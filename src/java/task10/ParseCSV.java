@@ -1,8 +1,10 @@
 package task10;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -12,6 +14,8 @@ public class ParseCSV {
     private static final int INDEX_OF_FIELD_TIME = 2;
     private static final int INDEX_OF_FIELD_USER = 3;
     private static final String REPORT_FILENAME = "report.csv";
+    private static final String SOURCE_PATH = "src/java/task10/resources/";
+    private static final String OUTPUT_PATH = "src/java/task10/output/";
     private static String[] FILENAMES = {"test1.csv", "test2.csv", "test3.csv", "test4.csv", "test5.csv"};
     private static final int MAX_COUNT_OF_THREADS = 5;
 
@@ -27,7 +31,7 @@ public class ParseCSV {
         ParseCSV parser = new ParseCSV();
         parser.runThreads();
         parser.printReport();
-        parser.printReportInFile(REPORT_FILENAME);
+        parser.printReportInFile(OUTPUT_PATH + REPORT_FILENAME);
     }
 
     /**
@@ -37,7 +41,7 @@ public class ParseCSV {
     private void runThreads() {
         ExecutorService executor = Executors.newFixedThreadPool(MAX_COUNT_OF_THREADS);
         for (int i = 0; i < FILENAMES.length; i++) {
-            ThreadForParsing parseFile = new ThreadForParsing(FILENAMES[i]);
+            ThreadForParsing parseFile = new ThreadForParsing(SOURCE_PATH + FILENAMES[i]);
             executor.execute(parseFile);
         }
         executor.shutdown();
@@ -99,7 +103,9 @@ public class ParseCSV {
         for (String user : userUsageOfUrl.keySet()) {
             Map<String, Long> spentTimeAtUrl = userUsageOfUrl.get(user);
             for (String url : spentTimeAtUrl.keySet()) {
-                System.out.println(user + " " + url + " " + spentTimeAtUrl.get(url));
+                DateFormat format = new SimpleDateFormat("HHч mmмин ssсек");
+                format.setTimeZone(TimeZone.getTimeZone("UTC"));
+                System.out.println(user + " " + url + " " + format.format(new Date(spentTimeAtUrl.get(url) * 1000)));
             }
         }
     }
@@ -110,11 +116,19 @@ public class ParseCSV {
      * @param filename - name of the file, where report writes
      */
     private void printReportInFile(String filename) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+        File outputFile=new File(filename);
+        File folder =new File(OUTPUT_PATH);
+        if(!folder.exists()){
+            folder.mkdir();
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
+            writer.write("user;url;time\n");
             for (String user : userUsageOfUrl.keySet()) {
                 Map<String, Long> spentTimeAtUrl = userUsageOfUrl.get(user);
                 for (String url : spentTimeAtUrl.keySet()) {
-                    writer.append(user + ";" + url + ";" + spentTimeAtUrl.get(url) + "\n");
+                    DateFormat format = new SimpleDateFormat("HHч mmмин ssсек");
+                    format.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    writer.append(user + ";" + url + ";" + format.format(spentTimeAtUrl.get(url)) + "\n");
                 }
             }
         } catch (IOException e) {
