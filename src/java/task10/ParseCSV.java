@@ -105,7 +105,7 @@ public class ParseCSV {
             for (String url : spentTimeAtUrl.keySet()) {
                 DateFormat format = new SimpleDateFormat("HHч mmмин ssсек");
                 format.setTimeZone(TimeZone.getTimeZone("UTC"));
-                System.out.println(user + " " + url + " " + format.format(new Date(spentTimeAtUrl.get(url) * 1000)));
+                System.out.println(user + " " + url + " " + format.format(new Date(spentTimeAtUrl.get(url))));
             }
         }
     }
