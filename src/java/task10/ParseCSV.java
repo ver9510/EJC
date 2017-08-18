@@ -116,9 +116,9 @@ public class ParseCSV {
      * @param filename - name of the file, where report writes
      */
     private void printReportInFile(String filename) {
-        File outputFile=new File(filename);
-        File folder =new File(OUTPUT_PATH);
-        if(!folder.exists()){
+        File outputFile = new File(filename);
+        File folder = new File(OUTPUT_PATH);
+        if (!folder.exists()) {
             folder.mkdir();
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
